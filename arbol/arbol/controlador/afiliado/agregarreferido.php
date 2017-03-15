@@ -1,0 +1,106 @@
+<?php
+require_once "../../lib/interface/bean/iBean.php";
+require_once "../../lib/utils/ngrupo.php";
+$page = null;
+class AgregarReferido implements iBean {
+	var $enlace;
+	var $incremento;
+	var $idAfiliado;
+	var $idReferido;
+	var $nGrupo;
+	var $body;
+	function control() {
+		$this->enlace = (new Conexion ())->connect ();
+		$this->incremento = 15;
+		$this->loadVars ();
+		$this->agregar ();
+	}
+	function loadVars() {
+		$this->idAfiliado = $_REQUEST ['id'];
+		$this->idReferido = $_REQUEST ['id2'];
+		$this->nGrupo = unserialize ( $_SESSION ['NuevoGrupo'] );
+	}
+	function validarCantidad($cantidad) {
+		if ($_SESSION ['ReferidoCambiar'] != null) {
+			return true;
+		}
+		return ($cantidad < 2);
+	}
+	function referidoCambiar($id) {
+		if ($_SESSION ['ReferidoCambiar'] != null) {
+			$_SESSION['NuevoReferido'] = $id;
+			$this->body = ' <meta http-equiv="Refresh" content="1;url=./principal.php?nav=afiliado/cambiarafiliado" />Redireccionando...';
+			return true;
+		}
+		return false;
+	}
+	function agregar() {
+		$imprimir = "";
+		$referido = new Referidos ();
+		$referido->setAfiliado ( $this->idAfiliado );
+		$sql = $referido->cantidad () . $referido->where ();
+		$result = $this->enlace->query ( $sql );
+		$cantidad = 0;
+		if ($result != null) {
+			if ($row = $result->fetch_array ()) {
+				$cantidad = $row ['cont'];
+			}
+		}
+		
+		if ($this->validarCantidad ( $cantidad )) {
+			$grupo = new Grupo ();
+			$grupo->setAfiliado ( $this->idReferido );
+			$grupo->setNumeroGrupo ( $this->nGrupo->numero );
+			$grupo->setIncremento ( $this->incremento );
+			
+			$anio = $this->nGrupo->anio;
+			$mes  = (intval($this->nGrupo->mes) < 10 ? "0" . intval($this->nGrupo->mes) : $this->nGrupo->mes) ;
+			$mes  = $mes > 12?$mes-12:$mes;
+			$mes  = intval($mes) < 10?"0".intval($mes):$mes;
+			$dia  = (intval($this->nGrupo->grupo) < 10 ? "0" . intval($this->nGrupo->numero) :intval( $this->nGrupo->numero));
+			$dia  = intval($dia) > 30?intval($dia)-30:intval($dia);
+			$dia  = intval($dia) < 10?"0".intval($dia):intval($dia);
+			
+			$fecha0 = $anio . "-" . $mes . "-" . $dia;
+			$grupo->setFechaIngreso ( $fecha0 );
+			$grupo->setFechaPrimero ( $fecha0 );
+			$grupo->setFechaSegundo ( $fecha0 );
+			$grupo->setFechaTercero ( $fecha0 );
+			$sql = $grupo->insert ();
+			$result = $this->enlace->query ( $sql );
+			if ($result != null) {
+				$id = $this->enlace->insert_id;
+				if ($id != null && strlen ( $id ) > 0) {
+					$referido->setReferido ( $id );
+					$referido->setAfiliado ( $this->idAfiliado );
+					$sql = $referido->insert ();
+					$result = $this->enlace->query ( $sql );
+					if ($result != null) {
+						if (! $this->referidoCambiar ($this->enlace->insert_id)) {
+							$imprimir = "<font color='green'>Referido Agregado Correctamente</font>";
+						}else{
+							return;
+						}
+					} else {
+						$imprimir = "<font color='red'>No se pudo Agregar el Referido</font>";
+					}
+					$_SESSION ['NuevoGrupo'] = null;
+					unset ( $_SESSION ['NuevoGrupo'] );
+				} else {
+					$imprimir = "<font color='red'>No se obtuvo la llave del grupo creado</font>";
+				}
+			} else {
+				$imprimir = "<font color='red'>No se pudo Agregar el Referido a un Grupo.</font>";
+			}
+		} else {
+			$imprimir = "<font color='orange'>Ya tiene sus dos referidos agregados</font>";
+		}
+		$this->body = $imprimir;
+	}
+	function pantalla() {
+		$body = $this->body;
+		return $body;
+	}
+}
+$page = new AgregarReferido ();
+?>

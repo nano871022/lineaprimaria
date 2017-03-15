@@ -1,0 +1,182 @@
+.nombre{
+			width: 60%;
+			float: left;
+			height: 80px;
+			text-align: center;
+			margin-top: 15px;
+			font-size: 18px;
+			font-family: sans-serif;
+			font-style: oblique;
+		}
+		.floatLeft{
+		float:left;
+		}
+		header>div>div{
+		  width:200px;
+		}
+		div>div{
+				  float:left;
+		}
+		section>div>div{
+			min-width:200px;
+		}
+		.referidoNombre{
+		    text-align: center;
+			width: 100%;
+		}
+		.contenedor{
+			height: 100px;
+			}
+		nav{
+			border-radius: 6px;
+			width: 150px;
+			text-align: center;
+			background-color: #ccc;
+                        float:left;
+			}
+		footer{
+			    text-align: center;
+				height: 30px;
+				background-color: #ABB;
+				MARGIN-top: 10px;
+				font-size: 14px;
+				padding-top: 8px;
+				color:white;
+		}
+		nav>ul{    display: inline;}
+		nav>ul>li{
+			       border-left-width: 6px;
+    border-left-style: solid;
+    border-left-color: blue;
+    background-color: #CCCCFC;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin-left: 5px;
+    list-style-type: none;
+    margin-right: 5px;
+    border-radius: 6px;
+    margin-top:3px;
+			}
+section{
+min-height: 100px;
+margin-left:160px;
+}
+header{
+	    border-bottom-style: solid;
+		border-bottom-width: 1px;
+		margin-bottom: 5px;
+		border-color: #ADACD9;
+	}
+
+	.referidoEmpty{
+    background-color: #fbfd6a !important;
+    min-width:40px !important;
+	}
+	.referido,.referidoEmpty{
+    min-width: 100px;
+    border-radius: 5px;
+    border-width: 1px;
+    margin-left: 10px;
+    padding-top:5px;
+    padding-bottom:5px;
+    text-align: center;
+    background-color: #ddf3f3;
+	}
+.referidoFloat{
+	float:left;
+	}
+.arbolWrapper{
+	float:left;width:600px;height: 200px;
+}
+td{
+	vertical-align: top
+}
+.arbolSeparador{
+	height:10px;width:100%
+}
+.arbolLineLeft{
+	border-left-style:solid;
+	border-left-width:1px;
+	height: 20px;
+}
+.arbolLineUp{
+	border-top-style:solid;
+	border-top-width:1px;
+}
+.arbolLineRight{
+	border-right-style:solid;
+	border-right-width:1px;
+	height: 20px;
+}
+button{
+	border-radius: 10px;
+	margin-top:5px
+}
+button:hover{
+	background-color:#aaddcc;
+	color:white;
+}
+.arboltdHead{
+	vertical-align:middle;
+	width:90%;
+}
+.btn-cerrar{
+	background-color:#ef5656;
+	 color:white;
+}
+.btn-cerrar:hover{
+	background-color:red;
+	 color:white;
+}
+.btn-change{
+	background-color:#34cb34;
+	 color:white;
+}
+.msnUnico{
+	padding: 10px;
+	float:left;
+}
+.externoHeadArbol{
+}
+
+.tabs{
+padding-left:10px;
+padding-right:10px;
+padding-top:5px;
+padding-bottom:5px;
+cursor:pointer;
+}
+.tabBody{
+float:none;
+padding-top:30px;
+}
+.tabNow{
+background-color:#c0d7ef;
+}
+.tab{
+background-color:#dcddde;
+}
+.tabBodyNow{
+display:block;
+border-top-style:solid;
+border-top-width:1px;
+border-top-color:#c0d7ef;
+}
+.tabBody2{
+display:none;
+}
+.menu{display:none;}
+.menuNow{
+display:block;
+}
+.menu-btn{
+cursor:pointer;
+padding-left:10px;
+padding-right:10px;
+padding-top:5px;
+padding-bottom:5px;
+background-color:#c0d7ef;
+}
+.center{
+text-align:center;
+}
